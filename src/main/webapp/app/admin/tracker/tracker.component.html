@@ -1,5 +1,12 @@
 <div>
-  <h2 id="tracker-page-heading" data-cy="trackerPageHeading">Активность пользователей в реальном времени</h2>
+  <!--  <h2 id="tracker-page-heading" data-cy="trackerPageHeading">Активность пользователей в реальном времени</h2>-->
+
+  <figure class="text-center">
+    <blockquote class="blockquote">
+      <p>Ты не ты, когда не ты.</p>
+    </blockquote>
+    <figcaption class="blockquote-footer">Волк <cite title="Source Title">с трусов</cite></figcaption>
+  </figure>
 
   <div class="table-responsive">
     <table class="table table-striped" aria-describedby="tracker-page-heading" data-cy="trackerTable">
@@ -9,17 +16,20 @@
           <th scope="col">IP Адрес</th>
           <th scope="col">Текущая страница</th>
           <th scope="col">Время</th>
-          <th scope="col"></th>
+          <!--          <th scope="col"></th>-->
         </tr>
       </thead>
       <tbody>
-        @for (activity of activities; track $index) {
+        @for (activity of activities; track $index; let i = $index) {
           <tr>
-            <td>{{ activity.userLogin }}</td>
-            <td>{{ activity.ipAddress }}</td>
-            <td>{{ activity.page }}</td>
-            <td>{{ activity.time | date: 'yyyy-MM-dd HH:mm:ss' }}</td>
+            <td id="cell-{{ activity.sessionId }}-0">{{ activity.userLogin }}</td>
+            <td id="cell-{{ activity.sessionId }}-1">{{ activity.ipAddress }}</td>
+            <td id="cell-{{ activity.sessionId }}-2">{{ activity.page }}</td>
+            <td id="cell-{{ activity.sessionId }}-3">{{ activity.time | date: 'yyyy-MM-dd HH:mm:ss' }}</td>
+            <!--            <td></td>-->
           </tr>
+
+          <!--        <button class="btn btn-danger" (click)="fadeOutCell(activity.sessionId, 0)">Fade Out Name</button>-->
         }
       </tbody>
     </table>

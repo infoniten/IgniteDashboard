@@ -10,6 +10,7 @@ import SharedModule from 'app/shared/shared.module';
   selector: 'jhi-tracker',
   imports: [SharedModule],
   templateUrl: './tracker.component.html',
+  styleUrls: ['./fading-table.component.css'],
 })
 export default class TrackerComponent implements OnInit, OnDestroy {
   activities: TrackerActivity[] = [];
@@ -26,6 +27,7 @@ export default class TrackerComponent implements OnInit, OnDestroy {
         if (activity.page === 'logout') {
           this.activities.splice(index, 1);
         } else {
+          this.makeMeRedIfWeDifferent(index, activity);
           this.activities[index] = activity;
         }
       }
@@ -48,6 +50,31 @@ export default class TrackerComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
+    }
+  }
+
+  makeMeRedIfWeDifferent(index: number, activity: TrackerActivity) {
+    if (!(this.activities[index].userLogin === activity.userLogin)) {
+      this.fadeOutCell(activity.sessionId, 0);
+    }
+    if (!(this.activities[index].ipAddress === activity.ipAddress)) {
+      this.fadeOutCell(activity.sessionId, 1);
+    }
+    if (!(this.activities[index].page === activity.page)) {
+      this.fadeOutCell(activity.sessionId, 2);
+    }
+    if (!(this.activities[index].time === activity.time)) {
+      this.fadeOutCell(activity.sessionId, 3);
+    }
+  }
+
+  fadeOutCell(sessionId: string, cellIndex: number) {
+    const cellId = `cell-${sessionId}-${cellIndex}`;
+    const cell = document.getElementById(cellId);
+    if (cell) {
+      cell.classList.remove('fade-out');
+      void cell.offsetWidth;
+      cell.classList.add('fade-out');
     }
   }
 }

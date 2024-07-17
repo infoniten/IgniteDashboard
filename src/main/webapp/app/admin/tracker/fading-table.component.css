@@ -1,0 +1,12 @@
+.fade-out {
+  animation: fadeOut 2s forwards;
+}
+
+@keyframes fadeOut {
+  from {
+    background-color: red;
+  }
+  to {
+    background-color: white;
+  }
+}
